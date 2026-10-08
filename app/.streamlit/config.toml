@@ -1,0 +1,15 @@
+[theme]
+primaryColor = "#9C3D6B"
+backgroundColor = "#FFFFFF"
+secondaryBackgroundColor = "#F7F1F4"
+textColor = "#2B1D24"
+font = "sans serif"
+
+[client]
+toolbarMode = "viewer"
+
+[server]
+headless = true
+
+[browser]
+gatherUsageStats = false

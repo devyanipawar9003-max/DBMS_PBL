@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+.venv/
+.streamlit/secrets.toml
+.DS_Store
+report/_captions.json
+report/pages.json

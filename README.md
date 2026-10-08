@@ -16,45 +16,47 @@ The five salon rules are enforced **inside the database**, so no client can brea
 
 ## Video demonstration
 
-▶ **5-minute demo:** see [`video/VIDEO_LINK.md`](video/VIDEO_LINK.md)
+▶ **5-minute demo:** link in [`video/VIDEO_LINK.md`](video/VIDEO_LINK.md)
 
 ## Repository contents
 
 ```
-database/        SQL scripts (run salon_spa_full.sql, or 01 → 04 in order)
+presentations/   Review 1 (Week 7), Review 2 (Week 11), Review 3 – Final (Week 16) decks
+report/          Final PBL report (.docx and .pdf)
+database/        SQL scripts — run salon_spa_full.sql, or 01 → 04 in order
   01_schema.sql              18 tables, 85 constraints, 7 indexes
-  02_triggers.sql            validation procedure + 5 triggers
-  03_sample_data.sql         603 appointments, 40 customers, 10 staff … (generated)
+  02_triggers.sql            validation procedure + 5 business-rule triggers
+  03_sample_data.sql         603 appointments, 40 customers, 10 staff …
   04_views.sql               7 reporting views
   05_queries.sql             20 queries: joins, subqueries, aggregation, views
   06_test_business_rules.sql 18 rule tests (runs in a transaction, rolled back)
-  generate_sample_data.py    seeded generator for 03_sample_data.sql
-app/             Streamlit application (streamlit_app.py, db.py, ui.py, views/)
-presentations/   Review 1, Review 2, Review 3 decks (.pptx) + build script
-report/          Final PBL report (.docx and .pdf)
-docs/            ER diagram and relational schema diagram (+ generators)
-screenshots/     Application output screens (cropped/ = used in report)
-video/           Demo video link and recording script
+  generate_sample_data.py    seeded generator that produced 03_sample_data.sql
+app/             Python + Streamlit application (streamlit_app.py, db.py, ui.py, views/)
+docs/            ER diagram and relational schema diagram
+screenshots/     Application output screens used in the report
+video/           Link to the 5-minute demonstration video
 ```
 
 ## Run it
 
+Repository: https://github.com/devyanipawar9003-max/DBMS_PBL
+
 **1. Database** (MySQL 8.0+; MariaDB 10.11 also works)
 
+macOS (Homebrew):
 ```bash
-mysql -u root -p < database/salon_spa_full.sql
-# optional: an application user
-mysql -u root -p -e "CREATE USER 'salon'@'localhost' IDENTIFIED BY 'salon123';
-                     GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON salon_spa_db.* TO 'salon'@'localhost';"
+brew install mysql python
+brew services start mysql
+mysql -u root < database/salon_spa_full.sql
+mysql -u root -e "CREATE USER 'salon'@'localhost' IDENTIFIED BY 'salon123';
+                  GRANT SELECT, INSERT, UPDATE, DELETE, EXECUTE ON salon_spa_db.* TO 'salon'@'localhost';"
 ```
-
-On Arch Linux: `sudo pacman -S mariadb` (or install MySQL 8 from the AUR), then
-`sudo mariadb-install-db --user=mysql --basedir=/usr --datadir=/var/lib/mysql && sudo systemctl start mariadb`.
+Linux / Windows: install MySQL 8 (or MariaDB), then run the same two `mysql` commands (add `-p` if root has a password).
 
 **2. Application**
 
 ```bash
-python -m venv .venv && source .venv/bin/activate
+python3 -m venv .venv && source .venv/bin/activate      # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 # credentials default to salon / salon123 on localhost; override if needed:
 export SALON_DB_USER=root SALON_DB_PASSWORD=yourpassword
@@ -74,8 +76,8 @@ The sample data is centred on **8 October 2026** (past visits completed, later o
 
 | | |
 |---|---|
-| ![Dashboard](screenshots/cropped/01_dashboard.png) | ![Booking](screenshots/cropped/05_booking_skilled_staff.png) |
-| ![Rejected booking](screenshots/cropped/08_booking_rejected_skill.png) | ![Bill](screenshots/cropped/31_member_discount_bill.png) |
+| ![Dashboard](screenshots/01_dashboard.png) | ![Booking](screenshots/05_booking_skilled_staff.png) |
+| ![Rejected booking](screenshots/08_booking_rejected_skill.png) | ![Bill](screenshots/31_member_discount_bill.png) |
 
 ## ER diagram
 
